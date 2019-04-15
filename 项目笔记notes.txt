@@ -1,0 +1,167 @@
+4.5
+1.data中数据改变，但页面中显示数据并没有实时更新？
+Vue.set( target, key, value )
+参数：
+{Object | Array} target
+{string | number} key
+{any} value
+返回值：设置的值。
+
+2.vue中定时器创建以及销毁
+#1 在data中定义timer，然后在mouted/created中创建（赋值）定时器，在beforeDestroy中销毁定时器
+#2 通过$once事件侦听器来清除定时器
+this.$once('hook:beforeDestroy', () => {            
+    clearInterval(timer);                                    
+})
+
+
+3.轮播图组件
+# 轮播图的尺寸 传参
+# 轮播图的内容数量 传参
+# 轮播图的内容 传参或vue内定义
+
+4.路由不是a标签
+router-link的tag不是设置为a标签时，不能像正常a标签那样在新窗口打开，也无法复制链接
+
+5.div容器缩放居中的方法
+外层容器 width = 100%
+内层容器固定宽度 width = 1200px，且margin = 0 auto;
+
+通用的组件最好在自身内部进行缩放居中处理，这样父组件就可以即插即用，无需再使用容器来包装子组件？
+
+6.使得某元素滚动条滚动一定距离后固定位置的方法
+#1 监听滚动条位置 
+window.onscroll(function () {});
+document.addEventListener("onscroll", function (e) {})
+#2 达到位置后，给元素添加一个包含position:fixed或者absolute的类
+offsetY = window.pageYOffset
+
+7.正常块级元素width默认占一整行，float浮动之后，宽度由内容撑开；
+height和line-height会继承父元素，height默认情况下会被撑开
+
+8.span最好的用法是不设置宽高，然后设置其margin，padding？？
+最好不要用margin/padding定位
+
+9.父元素高度为min-height时，子元素无法继承其值
+
+10.<route-link>标签中的(click)事件监听功能失效问题
+在使用<route-link>跳转路由时，加在<route-link>标签中的(click)事件监听功能好像会失效，可以在事件监听函数中this.$push()来进行路由跳转
+
+11.浮动问题：清除浮动的方法(注意：所有元素都可以浮动，元素浮动后会变成块级元素)
+#1 在子元素后面添加一个空元素，为其设置clear:both，要求该空元素为块级元素
+原理：父容器需要考虑非浮动子元素，而新添加的空元素就在最后面，所以必定会包括原来的浮动元素，缺点是添加了元素。
+#2 将父元素也设置为浮动，缺点是可能会影响后面元素的布局。
+#3 父容器设置overflow:hidden(auto)
+原理：父容器加上overflow后，需要计算子元素超出内容，会自动撑开把所有子元素放进去，缺点是IE6不支持，可以给父元素设置zoom:1获得IE6支持，且子元素超出容器无法显示。
+#4 给父元素的伪元素(类似于方法#1)::after设置clear:both同时设置display:block，缺点是IE6不支持，可以给父元素设置zoom:1获得IE6支持
+
+12.两个block块级元素，设置width为50%，如果没有float，他们均独占一行，若设置为inline-block，会显示在同一行；
+
+13.做循环累加时，开始定义count要赋值为0；
+
+14.图片路径拼接问题
+使用require拼接时，
+
+15.vue报错 Raw expression 问题
+这问题常见于绑定class和style，看看代码时候少了花括号{}。
+
+16.行内元素display:inline
+span为例，若不改变其display，其宽高为auto，不可以改变的，但可以设置其padding，设置padding后，span里面的内容处于原来位置不会发生改变，比如其外层设置了line-height来垂直居中，即使设置了padding，span里面的内容依然垂直居中
+
+17.合并两个数组
+#1 concat
+#2 for循环遍历
+#3 apply
+a.apply(a, b)
+
+18.同一页面引用两个子组件时，怎么防止数据污染？
+v-if跟v-show的区别：
+使用v-show时，页面创建时，同时创建多个子组件的对象，互相不影响；
+使用v-if时，条件成立才创建新的子组件对象，而且新的子组件对象使用的数据可能会受到前面的子组件的影响；
+
+19.css3动画比较难搞
+vue动画？
+
+
+20.data中的对象属性，要先定义好（占位），这样修改才有效，后面程序运行过程再添加数据，会没有效果。
+
+21.beforeMount=> 页面渲染 =>mounted
+有一些需要在页面渲染时使用到的数据，需要在beforeMount中初始化。
+
+22.css3过渡
+两个关键点：需要过渡的属性，效果的时长
+
+4/15 众妙之门 精通CSS3
+23.使用字体
+// 引入字体文件
+@font-face {
+    font-family: wenyuexinqingnian;
+    src: url('/static/wenyuexinqingnian.ttf');
+}
+// 使用字体
+font-family: WenYueSXSQiuYiNongTi;/*wenyuexinqingnian;*/
+
+24.渐变
+background: linear-gradient(to top left, red, blue);
+# 或者不用方向，而是加一个角度，角度是指水平线和渐变线之间的角度
+background: linear-gradient(45deg, red, blue);
+# 多颜色渐变，颜色放在后面，无限添加
+background: linear-gradient(to top left, red, blue, color3, color4,...);
+# 使用透明度，来获得同一颜色由浅到深的渐变
+background: linear-gradient(to top left, rgba(255,0,0,0), rgba(255,0,0,1));
+# 径向渐变
+background: radial-grandient(center, shape, size, color1, color2,...)
+
+25.伪类
+结构伪类：
+:root
+:first-child
+:last-child
+:nth-child()
+:nth-last-child()
+:nth-of-type()
+:nth-last-of-type()
+:first-of-type
+:last-of-type
+:only-of-type
+:only-child
+:empty
+
+26.滚动条与视窗高度问题
+# 查看滚动条的滚动距离（水平距离或垂直距离）：
+window.pageXOffset/window.pageYOffset
+document.body.scrollLeft/Top
+document.documentElement.scrollLeft/Top
+封装函数：16：30
+
+# 查看视口的尺寸 
+window.innerWidth/innerHeight   // IE9以下不兼容
+document.documentElement.clientWidth/clientHeight  // 标准模式下，任意浏览器都兼容
+document.body.clientWidth/clientHeight  // 适用于怪异模式下的浏览器
+封装函数：getViewportOffset() 33:00
+
+// 计算滚动条移动条下方与屏幕地面的距离；
+calScrollBottom: function () {
+	var scrollTop = document.documentElement.scrollTop,
+		// 滚动条与顶部的距离，可理解为滚动条移动条部分的顶部与屏幕顶部之间的距离；
+		clientHeight = document.documentElement.clientHeight,
+		// 屏幕可视高度，可理解为滚动条移动条部分的长度；
+		scrollHeight = document.documentElement.scrollHeight;
+		// 滚动条可滚动的总高度，可理解为整条滚动条的长度；
+	this.scrollBottom = scrollHeight - clientHeight - scrollTop;
+},
+// 自动检测滚动条下拉距离，隐藏金额汇总栏
+autoHideSummaryBar: function () {
+	var calScrollBottom = this.calScrollBottom;
+	var fixHeaderAgain = this.fixHeaderAgain;
+	window.onscroll = function () {
+		fixHeaderAgain();
+		calScrollBottom();
+	};
+},
+
+27.当子组件触发一个全局window.onscroll()事件，跟父组件发生冲突造成覆盖时，可以在子组件自定义一个事件，在触发该全局事件，同时触发该自定义事件，然后在父组件中监听该自定义事件，执行相关操作。
+
+28.
+#1 商品详情页面；
+#2 搜索展示页面；
