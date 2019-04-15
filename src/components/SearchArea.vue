@@ -1,7 +1,7 @@
 <template>
   <div class="search-area" id="search-area">
   		<div class="container">
-	  		<span class="logo">每日生鲜</span>
+	  		<span class="logo"></span>
 	  		<div class="shopping-cart" @mouseenter="showShoppingCartList" @mouseleave="showShoppingCartList">
 	  			<div class="shopping-cart-header">
 	  				<span>我的购物车</span>
@@ -128,15 +128,21 @@ export default {
 		/*background-color: red;*/
 	}
 	.search-area .logo {
+		position: absolute;
+		height: 49px;
+		width: 180px;
+		top: 15px;
+		background: url('../assets/main-view/logo1.png') no-repeat;
+		background-size: 180px 49px;
 		/*width: 15%;*/
 		/*display: inline-block;*/
-		font-size: 57px;
+		/*font-size: 57px;
 		color: #12ab34;
 		float: left;
-		padding-left: 0px;
+		padding-left: 0px;*/
 		/*border: 1px solid blue;*/
 		/*font-weight: bold;*/
-		font-family: WenYueSXSQiuYiNongTi;/*wenyuexinqingnian;*/
+		/*font-family: WenYueSXSQiuYiNongTi;*/
 		/*text-shadow: 2px 2px 5px #222;*/
 	}
 	/* 搜索框 */

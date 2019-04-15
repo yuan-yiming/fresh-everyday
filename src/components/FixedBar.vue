@@ -4,7 +4,7 @@
   		<div class="logo">
   			<router-link :to="{name:'Home'}" 
   				tag="span" class="logo-span">
-	  			每日生鲜
+	  			<!-- 每日生鲜 -->
   			</router-link>
   		</div>
   		<div class="slot">
@@ -45,15 +45,17 @@ export default {
 	}
 	.fixed-bar .logo {
 		position: absolute;
-		height: 60px;
-		line-height: 60px;
+		top: 5px;
+		height: 50px;
+		width: 152.2px;
+		background: red url('../assets/main-view/logo2.png');
+		background-size: 152.2px 50px;
 	}
 	.fixed-bar .logo .logo-span {
-		font-family: WenYueSXSQiuYiNongTi;
-		color: #fff;
-		font-size: 40px;
+		display: inline-block;
+		width: 100%;
+		height: 100%;
 		cursor: pointer;
-		padding: 0 25.5px;
 		/*background-color: #fff;
 		border-radius: 15px;*/
 	}

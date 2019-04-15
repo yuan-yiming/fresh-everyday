@@ -2,7 +2,7 @@
   <div id="good-fresh">
   	<div class="fresh-container">
   		<div class="fresh-header">
-  			<span>今日优选</span>
+  			<span class="logo-icon"></span>
   		</div>
   		<div class="fresh-content">
   			<ul class="fresh-list">
@@ -255,14 +255,14 @@ export default {
 		top: -80px;
 		text-align: center;
 	}
-	#good-fresh .fresh-header span {
-		background-color: #12ab34;
-		padding: 0 10px;
+	#good-fresh .fresh-header .logo-icon {
+		background: url('../assets/main-view/logo3.png');
+		background-size: 198px 64px;
+		display: inline-block;
+		margin-top: 8px;
+		width: 198px;
+		height: 64px;
 		border-radius: 10px;
-		font-family: WenYueSXSQiuYiNongTi;
-		font-size: 50px;
-		/*font-weight: bold;*/
-		color: #fff;
 	}
 	/* 底部 */
 	#good-fresh .fresh-footer {

@@ -27,12 +27,12 @@ a:link, a:visited {
   -moz-osx-font-smoothing: grayscale;
   color: #424242;/*#2c3e50;*/
 }
-@font-face {
+/*@font-face {
     font-family: wenyuexinqingnian;
-    src: url('/static/wenyuexinqingnian.ttf');
+    src: url('../static/wenyuexinqingnian.ttf');
 }
 @font-face {
   font-family:WenYueSXSQiuYiNongTi;
-  src: url('/static/WenYueSXSQiuYiNongTi.otf');
-}
+  src: url('../static/WenYueSXSQiuYiNongTi.otf');
+}*/
 </style>

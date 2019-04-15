@@ -3,7 +3,7 @@
 		<div class="profile">
 			<div class="user">
 				<div class="user-avatar">
-					<img :src="user.avatarLink">
+					<img src="../assets/user-center/home/avatar.png">
 				</div>
 				<p class="user-name">用户名：{{ user.name }}</p>
 				<p class="user-account">账 号：{{ user.account }}</p>
@@ -49,7 +49,7 @@ export default {
     	user: {
     		name: '袁大明',
     		account: '88888888@qq.com',
-    		avatarLink: require('@/assets/user-center/home/avatar.png'),
+    		// avatarLink: ,
     	},
     	wallet: [
     		{
@@ -74,7 +74,7 @@ export default {
     			item: '待付款',
     			num: 1,
     			iconPosition: '2px -244px',
-    			activeIconPosition: '2px -306px',
+    			activeIconPosition: '2px -307px',
     		},
     		{
     			index: 1,
@@ -258,7 +258,8 @@ export default {
 		position: absolute;
 		top: 20px;
 		left: 36px;
-		background: url('../assets/user-center/home/sprite.png') no-repeat;
+		background: url('https://misc.360buyimg.com/user/myjd/home/2.0.8/css/i/sprite.png') no-repeat;
+		/*background:  url('../assets/user-center/home/icons.png') no-repeat;*/
 		background-size: 630px 391px;
 		/*background-position: */
 	}
