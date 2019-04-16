@@ -258,8 +258,8 @@ export default {
 		position: absolute;
 		top: 20px;
 		left: 36px;
-		background: url('https://misc.360buyimg.com/user/myjd/home/2.0.8/css/i/sprite.png') no-repeat;
-		/*background:  url('../assets/user-center/home/icons.png') no-repeat;*/
+		/*background: url('https://misc.360buyimg.com/user/myjd/home/2.0.8/css/i/sprite.png') no-repeat;*/
+		background:  url('../assets/user-center/home/icons.png') no-repeat;
 		background-size: 630px 391px;
 		/*background-position: */
 	}
