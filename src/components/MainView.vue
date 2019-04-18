@@ -63,6 +63,7 @@ export default {
 		background-size: 2100px; /* 这里不写百分比 */
 		background-position: 50% 0%;  /*背景图片居中*/	
 		margin-bottom: 120px;
+		margin-top: 30px;
 	}
 	#main-view .container {
 		box-sizing: border-box;

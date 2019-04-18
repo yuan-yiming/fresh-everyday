@@ -1,7 +1,7 @@
 <template>
   <div class="user-center-temp">
   	<!-- 1.标题 -->
-  	<div class="title common-title">
+  	<div class="title common-title" v-if="title">
   		<p>
   			{{ title }}
   		</p>

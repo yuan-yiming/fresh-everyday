@@ -1,7 +1,7 @@
 <template>
   <div class="search-area" id="search-area">
   		<div class="container">
-	  		<span class="logo"></span>
+	  		<router-link class="logo" :to="{name: 'Home'}" tag="span"></router-link>
 	  		<div class="shopping-cart" @mouseenter="showShoppingCartList" @mouseleave="showShoppingCartList">
 	  			<div class="shopping-cart-header">
 	  				<span>我的购物车</span>
@@ -30,10 +30,10 @@
 		  		</div>
 		  	</div>
 	  		<div class="search-box">
-	  			<form class="">
-		  			<input type="" name="" placeholder="搜索商品"><button>搜索</button>
+	  			<form class="search">
+		  			<label class=""><input type="text" name="" placeholder="搜索 奶油草莓" value="奶油草莓"><span>搜索</span></label>
 		  		</form>
-		  		<p><span>大闸蟹</span>|<span>三文鱼</span>|<span>牛排</span>|<span>鳕鱼</span>|<span>车厘子</span>|<span>奇异果</span>|<span>泰国榴莲</span>|<span>云南蓝莓</span>|<span>海南贵妃芒</span></p>
+		  		<p class="hot-search"><router-link :to="{name: 'ProductDetails'}" tag="span">奶油草莓</router-link>|<span>三文鱼</span>|<span>牛排</span>|<span>鳕鱼</span>|<span>车厘子</span>|<span>奇异果</span>|<span>泰国榴莲</span>|<span>云南蓝莓</span>|<span>海南贵妃芒</span></p>
 	  		</div>
   		</div>
   	</div>
@@ -134,6 +134,7 @@ export default {
 		top: 15px;
 		background: url('../assets/main-view/logo1.png') no-repeat;
 		background-size: 180px 49px;
+		cursor: pointer;
 		/*width: 15%;*/
 		/*display: inline-block;*/
 		/*font-size: 57px;
@@ -145,62 +146,68 @@ export default {
 		/*font-family: WenYueSXSQiuYiNongTi;*/
 		/*text-shadow: 2px 2px 5px #222;*/
 	}
-	/* 搜索框 */
+	/* 搜索框区域 */
 	.search-area .search-box {
 		position: absolute;
 		width: 600px;
+		height: 80px;
 		left: 300px;
 		/*top: 0;*/
 		/*border: 1px solid red;*/
 	}
-	/*display: inline-block;*/
-	.search-area .search-box>p {
-		font-size: 13px;
+	/* 热搜 */
+	.search-area .search-box .hot-search {
+		font-size: 12px;
 		height: 20px;
 		line-height: 20px;
 		position: absolute;
-		bottom: 10px;
+		bottom: 5px;
 		/*background-color: red;*/
 		margin-left: -8px;
 	}
-	.search-area .search-box>p>span {
+	.search-area .search-box .hot-search span {
 		margin: 0 8px;
 	}	
-	.search-area .search-box>p>span:hover {
+	.search-area .search-box .hot-search span:hover {
 		cursor: pointer;
 		color: #129934;
 	}
-	.search-area .search-box input {
-		width: 80%;
-		height: 30px;
+	/* 搜索框 */
+	.search-area .search-box .search input {
+		position: absolute;
+		top: 20px;
+		width: 480px;
+		height: 34px;
 		outline: none;
+		box-sizing: border-box;
 		border: 1px solid #12ab34;
-		vertical-align: 10px;
 		padding: 0 10px;
 	}
-	.search-area .search-box button {
-		width: 16%;
-		height: 32px;
+	.search-area .search-box .search span {
+		position: absolute;
+		left: 480px;
+		top: 20px;
+		width: 90px;
+		height: 34px;
+		line-height: 34px;
+		text-align: center;
 		border: none;
 		background-color: #12ab34;
-		vertical-align: 8px;
 		color: #fff;
 		font-size: 16px;
 		outline: none;
-	}
-	.search-area .search-box button:hover {
 		cursor: pointer;
 	}
 	/* 购物车 */
 	.search-area .shopping-cart {
 		position: absolute;
-		top: 15px;
+		top: 20px;
 		right: 80px;
 		display: inline-block;
 		border: 1px solid #999;
-		height: 30px;
+		height: 34px;
 		width: 150px;
-		line-height: 30px;
+		line-height: 34px;
 		/*padding: 0 20px;*/
 		
 	}

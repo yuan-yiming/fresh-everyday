@@ -24,6 +24,6 @@
 <style scoped>
 	#header {
 		width: 100%;
-		height: 150px;
+		height: 120px;
 	}
 </style>
