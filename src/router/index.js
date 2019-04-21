@@ -64,7 +64,7 @@ export default new Router({
       	{
       		path: 'shopping-cart',
       		name: 'ShoppingCart',
-      		component: ShoppingCart,s
+      		component: ShoppingCart,
       	},
       	{
       		path: 'my-order2',
