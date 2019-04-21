@@ -7,7 +7,6 @@ import Login from '@/components/Login'
 import Register from '@/components/Register'
 
 import UserCenter from '@/components/UserCenter'
-import PriceReduced from '@/components/PriceReduced'
 import UserCenterHome from '@/components/UserCenterHome'
 import ShoppingCart from '@/components/ShoppingCart'
 import MyOrder2 from '@/components/MyOrder2'
@@ -29,10 +28,9 @@ export default new Router({
       component: Home
     },
     {
-      path: '/product-details',
+      path: '/product-details/:id',
       name: 'ProductDetails',
-      component: ProductDetails,
-      
+      component: ProductDetails,  
     },
     {
       path: '/login',
@@ -48,49 +46,46 @@ export default new Router({
       path: '/user-center',
       name: 'UserCenter',
       component: UserCenter,
-      // redirect: ''
+      redirect: to=> {
+        return '/user-center/user-center-home'
+      },
       children: [
-	    {
-	    	path: '',
-	    	name: 'UserCenterHome',
-	    	component: UserCenterHome,
+          {
+          	path: 'user-center-home',
+          	name: 'UserCenterHome',
+          	component: UserCenterHome,
 
-	    },
-	    {
-	    	path: 'price-reduced',
-	    	name: 'PriceReduced',
-	    	component: PriceReduced,
-	    },
-      	{
-      		path: 'shopping-cart',
-      		name: 'ShoppingCart',
-      		component: ShoppingCart,
-      	},
-      	{
-      		path: 'my-order2',
-      		name: 'MyOrder2',
-      		component: MyOrder2,
-      	},
-      	{
-      		path: 'my-focus',
-      		name: 'MyFocus',
-      		component: MyFocus,
-      	},
-      	{
-      		path: 'my-wallet',
-      		name: 'MyWallet',
-      		component: MyWallet,
-      	},
-      	{
-      		path: 'my-message',
-      		name: 'MyMessage',
-      		component: MyMessage,
-      	},
-      	{
-      		path: 'after-sale',
-      		name: 'AfterSale',
-      		component: AfterSale,
-      	},
+          },
+        	{
+        		path: 'shopping-cart',
+        		name: 'ShoppingCart',
+        		component: ShoppingCart,
+        	},
+        	{
+        		path: 'my-order2',
+        		name: 'MyOrder2',
+        		component: MyOrder2,
+        	},
+        	{
+        		path: 'my-focus',
+        		name: 'MyFocus',
+        		component: MyFocus,
+        	},
+        	{
+        		path: 'my-wallet',
+        		name: 'MyWallet',
+        		component: MyWallet,
+        	},
+        	{
+        		path: 'my-message',
+        		name: 'MyMessage',
+        		component: MyMessage,
+        	},
+        	{
+        		path: 'after-sale',
+        		name: 'AfterSale',
+        		component: AfterSale,
+        	},
       ],
     },
   ]

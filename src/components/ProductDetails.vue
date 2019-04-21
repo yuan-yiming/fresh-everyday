@@ -3,24 +3,24 @@
   	<app-header/>
   	<!-- 分类栏 -->
   	<div class="category-wrapper">
-  		<div class="category">水果 > 草莓 > 商品详情 </div>  		
+  		<div class="category">水果 > {{ productInfo.name }} > 商品详情 </div>  		
   	</div>
 	<!-- 主要信息 -->
 	<div class="main-area">
 		<!-- 产品图片 -->
 		<div class="img-area">
-			<img src="../assets/product-details/0.jpg">
+			<img :src="getProductImgPath(productInfo.imgName)">
 		</div>
 		<!-- 产品信息 -->
 		<div class="product-info">
 			<div class="title">
-				<span class="company-name">{{ productInfo.companyName }}</span>
-				<span class="name">{{ productInfo.name }}</span>
+				<span class="company-name">{{ productInfo.brand }}</span>
+				<span class="name">{{ productInfo.desc }}</span>
 			</div>
 			<div class="main-details">
 				<div>
 					价格
-					<span class="price">￥{{ productInfo.price }}</span>
+					<span class="price">￥{{ productInfo.price1 }}</span>
 					<span class="price-lowering-inform">降价通知</span>
 				</div>
 				<div>
@@ -28,16 +28,16 @@
 				</div>
 				<div>
 					优惠券
-					<span v-for="discount in productInfo.discount" class="discount">{{ discount }}</span>
+					<span v-for="discount in discounts" class="discount">{{ discount }}</span>
 					<span class="more-discount">更多>></span> 
 				</div>
-				<div>重量 <span class="weight">{{ productInfo.weight }}</span></div>
+				<div>规格 <span class="weight">{{ productInfo.specification }}</span></div>
 				<div>
 					配送至 <span class="delivery-address">广东 广州市 天河区 <span class="down-arrow"></span></span>
 					<span class="in-stock">有货</span>
 					<span>在线支付免运费</span>
 					<br>
-					<span class="arrival-time">由 <span class="company">{{productInfo.companyName}}</span> 发货, 并提供售后服务，23:00前下单,预计明天(04月18日)发货</span>
+					<span class="arrival-time">由 <span class="company">{{productInfo.brand}}</span> 发货, 并提供售后服务，23:00前下单,预计明天(04月18日)发货</span>
 				</div>
 			</div>
 			<!-- 操作 -->
@@ -54,13 +54,16 @@
 		<div class="recommendation">
 			<p>大家都在看</p>
 			<ul>
-				<li v-for="product in recommendedProduct">
+				<router-link 
+					v-for="id in recommendedIds.slice(0,5)" 
+					:to="{name: 'ProductDetails', params: {id: id}}"
+					tag="li">
 					<div class="recom-product-img">
-						<img :src="getProductImgPath(product.imgName)">
+						<img :src="getProductImgPath(getProductInfo(id).imgName)">
 					</div>
-					<div class="recom-product-name">{{ product.name }}</div>
-					<div class="recom-product-price">￥{{ product.price }}</div>
-				</li>
+					<div class="recom-product-name">{{ getProductInfo(id).desc }}</div>
+					<div class="recom-product-price">￥{{ getProductInfo(id).price1 }}</div>
+				</router-link>
 			</ul>
 		</div>
 	</div>
@@ -70,15 +73,21 @@
 		<div class="hot-sale">
 			<p class="title">热销产品</p>
 			<ul>
-				<li v-for="product in recommendedProduct.slice(0,2)">
+				<router-link 
+					v-for="(id, index) in recommendedIds.slice(7,9)"
+					:to="{name: 'ProductDetails', params: {id: id}}"
+					tag="li">
 					<div class="recom-product-img">
-						<img :src="getProductImgPath(product.imgName)">
+						<img :src="getProductImgPath(getProductInfo(id).imgName)">
 					</div>
 					<div class="recom-product-sale-num">
-						<span class="rank">{{ product.index + 1 }}</span>热销{{ product.saleNum }}件
+						<span class="rank">{{ index + 1 }}</span>热销{{ getProductInfo(id).saleNum }}件
 					</div>
-					<div class="recom-product-price">￥{{ product.price }}</div>
-				</li>
+					<div class="recom-product-price">￥{{ getProductInfo(id).price1 }}</div>
+					<div class="pop-up-info">
+						{{ getProductInfo(id).desc }}
+					</div>
+				</router-link>
 			</ul>
 		</div>
 		<!-- 产品的一些信息 -->
@@ -92,6 +101,7 @@
 import AppHeader from '@/components/AppHeader'
 import AppFooter from '@/components/AppFooter'
 import MoreInfo from '@/components/MoreInfo'
+import products from '../../static/products.js'
 
 export default {
   name: 'ProductDetails',
@@ -106,63 +116,9 @@ export default {
   },
   data () {
     return {
+    	allProducts: products,
     	productNum: 1,
-    	productInfo: {
-    		id: 0,
-    		name: '红颜奶油草莓 约重1kg/20-24颗 新鲜水果',
-    		price: 45.90,
-    		weight: '1.24kg',
-    		companyName: '鲜绿水果',
-    		producingArea: '丹东/南通',
-    		commentNum: '3.7万+',
-    		discount: ['满50减5', '满99减20', '满199减50'],
-    		category: '新鲜水果',
-    		favoriteRating: '98%',
-    		imgName: {
-	    		img1: ['0-0-small.jpg', '0-0-big.jpg'],
-    			img1: ['0-1-small.jpg', '0-1-big.jpg'],
-    			img2: ['0-2-small.jpg', '0-2-big.jpg'],
-    			img3: ['0-3-small.jpg', '0-3-big.jpg'],
-    			img4: ['0-4-small.jpg', '0-4-big.jpg'],
-    		},
-    	},
-    	recommendedProduct: [
-    		{
-    			index: 0,
-    			name: '泰国进口龙眼 500g装 新鲜水果',
-    			price: 14.90,
-    			saleNum: 12534,
-    			imgName: 'recom-0.jpg',
-    		},
-    		{
-    			index: 1,
-    			name: '进口牛油果 6个装 单果重130-180g 新鲜水果',
-    			price: 39.90,
-    			saleNum: 34518,
-    			imgName: 'recom-1.jpg',
-    		},
-    		{
-    			index: 2,
-    			name: '海南桂花香荔枝 500g装 新鲜水果',
-    			price: 44.80,
-    			saleNum: 8518,
-    			imgName: 'recom-2.jpg',
-    		},
-    		{
-    			index: 3,
-    			name: '澳洲 进口无籽红提/葡萄 提子 450g装 新鲜水果',
-    			price: 27.90,
-    			saleNum: 90118,
-    			imgName: 'recom-3.jpg',
-    		},
-    		{
-    			index: 4,
-    			name: '越南进口红心火龙果 2个装 巨无霸大果 单果约600~700g 新鲜水果',
-    			price: 49.90,
-    			saleNum: 12218,
-    			imgName: 'recom-4.jpg',
-    		},
-    	],
+    	discounts: ['满50减5', '满99减20', '满199减50', '满299减100']
     }
   },
   methods: {
@@ -174,9 +130,32 @@ export default {
   		}
   	},
   	getProductImgPath: function (name) {
-  		return require('../assets/product-details/' + name);
+  		return require('../assets/product-images/' + name);
+  	},
+  	getProductInfo: function (id) {
+  		return this.allProducts[id-1];
   	},
   },
+  computed: {
+  	productInfo: function () {
+	  	return this.getProductInfo(this.$route.params.id);
+  	},
+  	recommendedIds: function () {
+  		var tempArr = [];
+  		// 十位数
+  		var tensDigit = Math.floor((this.$route.params.id-1)/10) * 10;
+  		for (var i = 1; i <= 10; i++) {
+  			var id = tensDigit + i;
+  			if (id != this.$route.params.id) {
+  				tempArr.push(id);
+  			}
+  		}
+  		return tempArr;
+  	},
+  },
+  mounted () {
+  	// console.log(this.recommendedIds);
+  	}
 };
 </script>
 
@@ -204,9 +183,6 @@ export default {
 			margin: 10px auto;
 			margin-bottom: 0;
 			position: relative;
-			/*background: red;*/
-			/*box-sizing: border-box;*/
-			/*border: 1px solid red;*/
 		}
 		.product-details .main-area::after {
 			content: '';
@@ -223,8 +199,8 @@ export default {
 			width: 320px;
 			height: 320px;
 			box-sizing: border-box;
-			border: 0.8px solid #ddd;
-			box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+			border: 1px solid #eee;
+			/*box-shadow: 0px 0px 10px rgba(0,0,0,0.2);*/
 
 		}
 		/* 商品信息1 */
@@ -249,7 +225,9 @@ export default {
 			border-radius: 2px;
 		}
 		.product-details .main-area .product-info .title .name {
-			font-size: 18px;
+			/*display: inline-block;*/
+			overflow: hidden;
+			font-size: 16px;
 			font-weight: bold;
 		}
 		/* 主要细节 */
@@ -496,10 +474,16 @@ export default {
 			border-bottom: 1px solid #ddd;
 		}
 		.product-details .other-info .hot-sale ul li {
+			/*background-color: */
 			width: 220px;
 			height: 200px;
 			box-sizing: border-box;
 			border-bottom: 1px solid #ddd;
+			cursor: pointer;
+			position: relative;
+		}
+		.product-details .other-info .hot-sale ul li:hover {
+			/*box-shadow: 0px 0px 10px rgba(0,0,0,0.2);*/
 		}
 		.product-details .other-info .hot-sale ul li:last-child {
 			border: none;
@@ -511,7 +495,7 @@ export default {
 			/*background-color: red;*/
 		}
 		.product-details .other-info .hot-sale ul li>.recom-product-img img {
-			width: 160px;
+			width: 100%;
 		}
 		.product-details .other-info .hot-sale ul li>.recom-product-sale-num {
 			float: left;
@@ -540,6 +524,24 @@ export default {
 			color: #ef1234;
 			font-size: 18px;
 			font-weight: bold;
+		}
+		.product-details .other-info .hot-sale ul li>.pop-up-info {
+			position: absolute;
+			left: 30px;
+			bottom: 35px;
+			width: 150px;
+			height: 40px;
+			line-height: 20px;
+			text-align: center;
+			padding: 0 5px;
+			color: #fff;
+			font-size: 13px;
+			overflow: hidden;
+			background-color: rgba(0,0,0,0.7);
+			opacity: 0;
+		}
+		.product-details .other-info .hot-sale ul li:hover>.pop-up-info {
+			opacity: 1;
 		}
 		/* 产品信息2 */
 		

@@ -290,10 +290,6 @@ export default {
   			}
   		}
   	},
-  	// 店铺全选
-  	shopSelectAll: function (shop) {
-
-  	},
   	// 计算降价金额
   	calReducedMoney: function (product) {
   		return (this.getProduct(product.id).price0 - this.getProduct(product.id).price1).toFixed(2);
@@ -325,22 +321,11 @@ export default {
   	fixHeaderAgain: function () {
   		this.$emit('fix-header');
   	},
-  	// 获取所有商品列表的信息，（改用products.js）
-  	getAllProducts: function () {
-  		var _this = this;
-  		this.$http.get('../../static/products.json')
-  			.then(function (response) {
-  				_this.allProducts = eval('(' + JSON.parse(JSON.stringify(response.bodyText)) + ')').data;
-  			});
-  	},
   },
   created () {},
   mounted () {
   	this.calScrollBottom();
   	this.autoHideSummaryBar();
-  	// this.getAllProducts();
-  	console.log(this.isShopSelectedAll);
-  	console.log(this.isSelectedAll);
   }
 };
 </script>

@@ -9,15 +9,22 @@
 						<span class="gt">&gt;</span>
 					</p>
 					<p class="hot-choice">
-						<span v-for="hot in category.includedProduct.slice(0,3)"> {{ hot }} </span>
+						<router-link 
+							v-for="id in getCategoryProductIds(category.index).slice(0, 3)"
+							:to="{name: 'ProductDetails', params: {id:id}}"
+							tag="span"> 
+							{{ getProductInfo(id).name }} </router-link>
 					</p>
 				</div>
 				<div class="menu-level-2" v-show="category.show">
 					<h3><a href="#">{{ category.name }}</a></h3>
 					<div class="product-list">
-						<span v-for="product in category.includedProduct">
-							{{ product }}
-						</span>
+						<router-link  
+							v-for="id in getCategoryProductIds(category.index)"
+							:to="{name: 'ProductDetails', params: {id:id}}"
+							tag="span">
+							 {{ getProductInfo(id).name }} 
+						</router-link >
 					</div>
 				</div>
 			</li>
@@ -26,6 +33,7 @@
 </template>
 
 <script>
+	import products from '../../static/products.js'
 	export default {
 	  name: 'SideBar',
 	  data () {
@@ -35,33 +43,29 @@
 	    			index: 0,
 	    			show: false,
 	    			name: '新鲜水果',
-	    			includedProduct: ['苹果','香蕉','芒果','番石榴','火龙果','圣女果','榴莲','百香果','菠萝','西瓜','水蜜桃','哈密瓜']
 	    		},
 	    		{
 	    			index: 1,
 	    			show: false,
 	    			name: '海鲜水产',
-	    			includedProduct: ['扇贝','三文鱼','鳕鱼','大闸蟹','竹节虾','小龙虾','生蚝','鲍鱼','墨鱼','基围虾','金枪鱼','红虾']
 	    		},
 	    		{
 	    			index: 2,
 	    			show: false,
 	    			name: '精选肉类',
-	    			includedProduct: ['猪蹄','五花肉','肥牛','牛排','牛腩','羊肉卷','鸡翅','鸡腿','鸭掌','鸭舌','鸡柳','鸭脖']
 	    		},
 	    		{
 	    			index: 3,
 	    			show: false,
 	    			name: '冷饮冻食',
-	    			includedProduct: ['汤圆','冰激凌','果汁','手抓饼','云吞','水饺','包子','乳酸菌','蛋糕','牛肉丸','鱼丸','鱼豆腐']
 	    		},
 	    		{
 	    			index: 4,
 	    			show: false,
 	    			name: '蔬菜蛋品',
-	    			includedProduct: ['鸡蛋','菜心','西兰花','黄瓜','生菜','玉米','胡萝卜','西红柿','香芋','番薯','葱','鸭蛋']
 	    		},
 	    	],
+	    	allProducts: products,
 	    }
 	  },
 	  computed: {
@@ -72,6 +76,18 @@
 	  methods: {
 	  	showMenuLevel2: function (obj) {
 	  		obj.show = !obj.show;
+	  	},
+	  	// 获取每个类别的商品的id数组
+	  	getCategoryProductIds: function (index) {
+	  		var tempArr = [];
+	  		for (var i = 1; i <= 10; i++) {
+	  			tempArr.push(index*10 + i);
+	  		}
+	  		return tempArr;
+	  	},
+	  	// 获取商品信息
+	  	getProductInfo: function (id) {
+	  		return this.allProducts[id-1];
 	  	},
 	  }
 	};

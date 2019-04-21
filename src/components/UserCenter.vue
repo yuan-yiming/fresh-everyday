@@ -9,6 +9,7 @@
 	<!-- 主视图区 -->
 	<div class="main-view-wrapper">
 		<div class="main-view">
+			<!-- 左侧选项栏 -->
 			<div class="side-bar">
 				<ul class="side-nav">
 					<li v-for="item in itemNav">

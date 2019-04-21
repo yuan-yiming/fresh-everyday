@@ -25,25 +25,32 @@
 	  				<div class="total">
 						<span>共{{ shoppingCartNumber }}件商品</span>
 						<span>共计￥{{ totalMoneyOfShoppingCart }}</span>
-						<span>去购物车</span>
+						<span @click="goToShoppindCart">去购物车</span>
 	  				</div>
 		  		</div>
 		  	</div>
 	  		<div class="search-box">
 	  			<form class="search">
-		  			<label class=""><input type="text" name="" placeholder="搜索 奶油草莓" value="奶油草莓"><span>搜索</span></label>
+		  			<label class=""><input type="text" name="" placeholder="搜索 进口脐橙" value="西班牙 进口脐橙"><span>搜索</span></label>
 		  		</form>
-		  		<p class="hot-search"><router-link :to="{name: 'ProductDetails'}" tag="span">奶油草莓</router-link>|<span>三文鱼</span>|<span>牛排</span>|<span>鳕鱼</span>|<span>车厘子</span>|<span>奇异果</span>|<span>泰国榴莲</span>|<span>云南蓝莓</span>|<span>海南贵妃芒</span></p>
+		  		<p class="hot-search">
+		  			<router-link v-for="id in hotSearchIds" :to="{name: 'ProductDetails', params: {id:id}}" tag="span">
+		  				{{ getProductInfo(id).name }}
+		  			</router-link>
+		  		</p>
 	  		</div>
   		</div>
   	</div>
 </template>
 
 <script>
+import products from '../../static/products.js'
+
 export default {
 	name: 'Product',
 	data () {
 		return {
+			allProducts: products,
 			isShowShoppingCartList: false,
 			// 购物车
 			myShoppingCart: [
@@ -81,10 +88,12 @@ export default {
 					number: 1,
 					imgUrl: '#',
 				},
-			]
+			],
+			hotSearchIds: [3, 4, 6, 13, 15, 22, 27, 30, 33, 39, 42, 44],
 		}
 	},
 	computed: {
+		// 购物车总商品数量
 		shoppingCartNumber: function () {
 			var count = 0;
 			for (var i = 0; i < this.myShoppingCart.length; i++) {
@@ -92,6 +101,7 @@ export default {
 			}
 			return count;
 		},
+		// 购物车总额
 		totalMoneyOfShoppingCart: function () {
 			var count = 0;
 			for (var i = 0; i < this.myShoppingCart.length; i++) {
@@ -107,6 +117,12 @@ export default {
 	  	productImageURL: function (id) {
 			// require用法
 			return require('../assets/product-img/' + id + '.jpg');
+		},
+		goToShoppindCart: function () {
+			this.$router.push({path: '/user-center/shopping-cart'});
+		},
+		getProductInfo: function (id) {
+			return this.allProducts[id-1];
 		},
 	},
 };
@@ -157,16 +173,17 @@ export default {
 	}
 	/* 热搜 */
 	.search-area .search-box .hot-search {
-		font-size: 12px;
+		font-size: 13px;
+		color: #999;
 		height: 20px;
 		line-height: 20px;
 		position: absolute;
-		bottom: 5px;
+		bottom: 3px;
 		/*background-color: red;*/
-		margin-left: -8px;
+		margin-left: 0px;
 	}
 	.search-area .search-box .hot-search span {
-		margin: 0 8px;
+		margin: 0 3px;
 	}	
 	.search-area .search-box .hot-search span:hover {
 		cursor: pointer;
@@ -223,7 +240,7 @@ export default {
 	.search-area .shopping-cart:hover .shopping-cart-header {
 		background-color: #fff;
 		border-bottom: 1px solid #fff;
-		z-index: 2;
+		z-index: 20;
 	}
 	.search-area .shopping-cart .shopping-cart-header span:first-child {
 		margin-left: 20px;
@@ -265,7 +282,7 @@ export default {
 		background-color: #fff;
 		border: 1px solid #999;
 		font-size: 14px;
-		z-index: 1;
+		z-index: 10;
 		/*background-color: red;*/
 	}
 	.search-area .shopping-cart .shopping-cart-list ul {
