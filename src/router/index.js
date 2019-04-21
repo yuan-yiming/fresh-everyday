@@ -62,9 +62,9 @@ export default new Router({
 	    	component: PriceReduced,
 	    },
       	{
-      		path: 'shooping-cart',
+      		path: 'shopping-cart',
       		name: 'ShoppingCart',
-      		component: ShoppingCart,
+      		component: ShoppingCart,s
       	},
       	{
       		path: 'my-order2',
