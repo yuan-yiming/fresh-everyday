@@ -1,14 +1,14 @@
 <template>
   	<div class="summary-bar" :style="{width: width}">
 		<span class="left-part">
-			<label class="select-all"><input type="checkbox" name="">全选</label>
+			<label class="select-all"><input type="checkbox" name="" v-model="isSelectedAll" @click="selectAll">全选</label>
 			<span>删除选中的商品</span>
 			<span>移到我的关注</span>
 			<span>清空购物车</span>
 		</span>
 		<span class="right-part">
-			<span>已选择{{ "4" }}件商品</span>
-			<span>总价:￥{{ "1235.90" }}</span>
+			<span>已选择{{ selectedProductsNum }}件商品</span>
+			<span>总价:￥{{ totalMoney }}</span>
 			<span class="pay-it-now">去付款</span>
 		</span>
 	</div>
@@ -18,30 +18,33 @@
 export default {
   name: 'SummaryBar',
   props: {
-  	// selectedProductList: {
-  	// 	type: Array,
-  	// 	default: [],
-  	// },
+  	totalMoney: {
+  		type: String,
+  		default: 0,
+  	},
+  	selectedProductsNum: {
+  		type: Number,
+  		default: 0,
+  	},
   	width: {
   		type: String,
   		default: '90%'
   	},
+  	isSelectedAll: {
+  		type: Boolean,
+  		default: false,
+  	}
   },
   data () {
     return {
     }
   },
+  methods: {
+  	selectAll: function () {
+  		this.$emit('select-all');
+  	},
+  },
   computed: {
-  	productNum: function () {
-  		return this.selectedProductList.length;
-  	},
-  	totalMoney: function () {
-  		var count = 0;
-  		for (var i = 0; i < this.selectedProductList.length; i++) {
-  			var product = this.selectedProductList[i]
-  			count += product.price * product.num;
-  		} 
-  	},
   },
 };
 </script>

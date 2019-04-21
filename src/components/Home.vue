@@ -60,7 +60,7 @@ export default {
 		showFixedBar();
 		window.onscroll = function () {
 			showFixedBar();
-		}
+		};
 	}, 
 };
 </script>

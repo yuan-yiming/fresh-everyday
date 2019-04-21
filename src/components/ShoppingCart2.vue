@@ -10,7 +10,7 @@
 			<div class="header">
 				<div class="header-container">
 					<label class="all-selected-title header-title">
-						<input type="checkbox" name=""  @click="selectAll(shops)" v-model="isSelectedAll"><span>全选</span>
+						<input type="checkbox" name=""><span>全选</span>
 					</label>
 					<span class="product-name-title header-title">商品</span>
 					<span class="product-price-title header-title">单价</span>
@@ -22,25 +22,25 @@
 			<!-- 购物车中每个商家的列表 -->
 			<ul class="shop-list">
 				<!-- 以商家为列表，同一商家的商品放进同一个商家li里面 -->
-				<li v-for="shop in shops" v-if="shop.products.length != 0">
+				<li v-for="shop in shops">
 					<!-- 商家信息 -->
 					<div class="shop-info">
-						<input type="checkbox" name="" @click="selectAll(shop)" v-model="isShopSelectedAll[shops.indexOf(shop)]">
+						<input type="checkbox" name="">
 						<span class="shop-title">{{ shop.title }}</span>
-						<span v-if="shop.brand" class="shop-name">{{ shop.brand }}</span>
+						<span v-if="shop.name" class="shop-name">{{ shop.name }}</span>
 					</div>
 					<!-- 每个商家内的商品列表 -->
 					<ul class="product-list">
-						<li v-for="product in shop.products"
-							v-if="activeIndex ? getProduct(product.id).price1 < getProduct(product.id).price0 : 1">
-							<input type="checkbox" name="" value="" v-model="product.isSelected">
+						<li v-for="product in shop.products" 
+							v-if="activeIndex ? product.price < product.originalPrice : product.price">
+							<input type="checkbox" name="">
 							<span class="product-area">
-								<img :src="getProductImg(getProduct(product.id).imgName)" class="product-img">
-								<span class="product-name">{{ getProduct(product.id).desc }}</span>
+								<img :src="getProductImg(product.imgName)" class="product-img">
+								<span class="product-name">{{ product.name }}</span>
 							</span>
 							<span class="product-price info"
 								:style="{'line-height': calReducedMoney(product)>0 ? '20px' : '40px'}">
-								￥{{ getProduct(product.id).price1.toFixed(2) }}
+								￥{{ product.price.toFixed(2) }}
 								<br v-if="calReducedMoney(product)>0">
 								<span class="reduced-money"
 									:title="'比加入购物车时降价'+calReducedMoney(product)+'元'"
@@ -51,12 +51,12 @@
 							</span>
 							<span class="product-num info">
 								<span class="add" @click="addProductNum(product, false)">-</span>
-								<input type="text" name="" class="number" checked="checked"
+								<input type="text" name="" class="number" 
 									v-model="product.num">
 								<span class="subtract" @click="addProductNum(product, true)">＋</span>
 							</span>
 							<span class="subtotal info">
-								￥{{ (getProduct(product.id).price1*product.num).toFixed(2) }}
+								￥{{ (product.price*product.num).toFixed(2) }}
 							</span>
 							<span class="operation info">
 								<span class="delete">删除</span></br>
@@ -66,22 +66,12 @@
 					</ul>
 				</li>
 			</ul>
-			<summary-bar 
-				:width="'940px'"
-				:total-money="totalMoney"
-				:selected-products-num="selectedProductsNum"
-				:is-selected-all="isSelectedAll"
-				@select-all="selectAll(shops)">
+			<summary-bar :width="'940px'">
 			</summary-bar>
 		</div>
 		<!-- 汇总栏 -->
 		<div class="summary-container" v-show="scrollBottom > 340">
-			<summary-bar 
-				:width="'1200px'"
-				:total-money="totalMoney"
-				:selected-products-num="selectedProductsNum"
-				:is-selected-all="isSelectedAll"
-				@select-all="selectAll(shops)">
+			<summary-bar :width="'1200px'">
 			</summary-bar>
 		</div>
   	</user-center-temp>
@@ -114,147 +104,109 @@ export default {
     			showNum: 0,
     		},
     	],
-    	// shops数组表示店铺列表，数组中每个对象表示一个店铺
     	shops: [
     		{
-    			index: 1,
-    			brand: '鲜绿水果',
-    			title: '旗舰店',
-    			// 购物车中每个店铺的商品列表
+    			index: 0,
+    			name: '和平茶叶专营店',
+    			title: '优选好店',
     			products: [
     				{
-		    			id: 2,
-		    			num: 1,
-		    			isSelected: true,
-		    		},
-		    		{
-		    			id: 5,
-		    			num: 2,
-		    			isSelected: true,
-		    		},
+    					index: 0,
+    					name: '龙井茶 首件28元买2送1同款再送杯125g茶叶2019新茶 龙井绿茶 浙江龙井 绿茶礼盒罐装',
+    					price: 40.00,
+    					originalPrice: 40.00,
+    					num: 1,
+    					imgName: '0-0.jpg',
+    				},
+    				{
+    					index: 1,
+    					name: '碧螺春 首件28元买2送1同款再送杯 云雾 绿茶 2019新茶 罐装明前新茶春茶茶叶礼盒装',
+    					price: 38.00,
+    					originalPrice: 40.00,
+    					num: 2,
+    					imgName: '0-1.jpg',
+    				},
+    				{
+    					index: 2,
+    					name: '买2送1同款 蒲公英茶 蒲公英根叶茶炒制长白山婆婆丁茶花草茶可搭桑叶茶丁香茶胎菊玫瑰花茶祛湿降火茶',
+    					price: 19.90,
+    					originalPrice: 21.90,
+    					num: 2,
+    					imgName: '0-2.jpg',
+    				},
+    				{
+    					index: 3,
+    					name: '【买2送2同款再送杯】红豆薏米芡实茶祛湿茶200g养生茶苦荞大麦蒲公英根芡实薏仁茶除去湿气湿热茶',
+    					price: 29.90,
+    					originalPrice: 32.00,
+    					num: 1,
+    					imgName: '0-3.jpg',
+    				},
+    			],
+    		},
+    		{
+    			index: 1,
+    			name: '麦斯威尔旗舰店',
+    			title: '旗舰店',
+    			products: [
+    				{
+    					index: 0,
+    					name: '麦斯威尔原味速溶咖啡100条盒装 （1.3KG/盒）（新老包装交替发货）',
+    					price: 99.00,
+    					originalPrice: 99.00,
+    					num: 1,
+    					imgName: '1-0.jpg',
+    				},
+    				{
+    					index: 1,
+    					name: '麦斯威尔 英国进口 速溶香醇咖啡500g/罐 可冲277杯（新老包装交替发货）',
+    					price: 69.90,
+    					originalPrice: 79.00,
+    					num: 2,
+    					imgName: '1-1.jpg',
+    				},
     			],
     		},
     		{
     			index: 2,
-    			brand: '鲜活之道',
     			title: '自营店',
+    			name: '每日优鲜自营店',
     			products: [
     				{
-		    			id: 12,
-		    			num: 1,
-		    			isSelected: false,
-		    		},
-		    		{
-		    			id: 15,
-		    			num: 2,
-		    			isSelected: false,
-		    		},
-    			],
-    		},
-    		{
-    			index: 3,
-    			brand: '无肉不欢',
-    			title: '优选好店',
-    			// isSelectedAll: false,
-    			products: [
-    			],
-    		},
-    		{
-    			index: 4,
-    			brand: '冰雪奇缘',
-    			title: '旗舰店',
-    			// isSelectedAll: false,
-    			products: [
+    					index: 0,
+    					name: '豪士乳酸菌小口袋面包网红小吃蛋糕心里软680g*2箱 早餐零食夹心蛋糕零食品 680g*2箱',
+    					price: 50.80,
+    					originalPrice: 52.00,
+    					num: 1,
+    					imgName: '2-0.jpg',
+    				},
     				{
-		    			id: 32,
-		    			num: 1,
-		    			isSelected: false,
-		    		},
-		    		{
-		    			id: 34,
-		    			num: 2,
-		    			isSelected: false,
-		    		},
-    			],
-    		},
-    		{
-    			index: 5,
-    			brand: '鲜菜篮子',
-    			title: '优选好店',
-    			// isSelectedAll: false,
-    			products: [
+    					index: 1,
+    					name: '越南进口 Lipo原味鸡蛋面包干300g*2袋 奶香味饼干糕点早餐零食 原味+巧克力味',
+    					price: 28.80,
+    					originalPrice: 28.80,
+    					num: 3,
+    					imgName: '2-1.jpg',
+    				},
+    				{
+    					index: 2,
+    					name: '天喔（ten wow） 天喔茶庄蜂蜜柚子茶饮料250ml*16盒整箱 上海特产果味茶饮品饮料 250ml*16盒',
+    					price: 29.00,
+    					originalPrice: 29.00,
+    					num: 1,
+    					imgName: '2-2.jpg',
+    				},
     			],
     		},	
     	],
-    	// 所有商品
-    	allProducts: [],
     }
-  },
-  computed: {
-  	// 计算勾选的商品总金额
-  	totalMoney: function () {
-  		var count = 0;
-  		for (var i = 0; i < this.shops.length; i++) {
-  			var products = this.shops[i].products;
-  			for (var j = 0; j < products.length; j++) {
-  				if (products[j].isSelected) {
-	  				count += this.getProduct(products[j].id).price1 * products[j].num;
-	  			}
-  			}
-  		}
-  		return count.toFixed(2);
-  	},
-  	// 计算购物车总商品数
-  	selectedProductsNum: function () {
-  		var count = 0;
-  		for (var i = 0; i < this.shops.length; i++) {
-  			var products = this.shops[i].products;
-  			for (var j = 0; j < products.length; j++) {
-  				if (products[j].isSelected) {
-	  				count += products[j].num;
-  				}
-  			}
-  		}
-  		return count;
-  	},
-  	// 购物车中的商品是否全选
-    isSelectedAll: {
-    	get () {
-    		for (var i = 0; i < this.shops.length; i++) {
-	    		if (!this.isShopSelectedAll[i]) {
-	    			return false;
-	    		}
-	  		}
-	  		return true;
-    	},
-    	// 这里要加一个空的setter，因为用v-model绑定时会报错
-    	set () {},
-    },
-  	// 店铺中的商品是否全选
-  	isShopSelectedAll: function () {
-  		var tempArr = [];
-  		for (var i = 0; i < this.shops.length; i++) {
-  			tempArr[i] = true;
-  			var products = this.shops[i].products;
-  			for (var j = 0; j < products.length; j++) {
-  				if (!products[j].isSelected) {
-	  				tempArr[i] = false;
-	  				break;
-  				}
-  			}
-  		}
-  		return tempArr;
-  	},
-  	
   },
   methods: {
   	changeActiveIndex: function (index) {
   		this.activeIndex = index;
   	},
-  	// 获取商品图片
   	getProductImg: function (name) {
-  		// return require('../assets/user-center/shopping-cart/' + name);
-  		return require('../assets/product-images/' + name);
+  		return require('../assets/user-center/shopping-cart/' + name);
   	},
   	// 加减商品数量
   	addProductNum: function (product, bool) {
@@ -264,42 +216,9 @@ export default {
   			product.num --;
   		}
   	},
-  	// 删除商品
-  	deleteProduct: function () {},
-
-  	// 全选购物车或者单个店家
-  	selectAll: function (all) {
-  		// 参数all可传入shops数组或者shops数组内的一个对象
-  		// all传入shops数组表示购物车中商品全选
-  		// all传入一个对象表示某个店铺中商品全选
-  		if (all instanceof Array) {
-  			var bool = !this.isSelectedAll;
-  			// var bool = false;
-  			for (var i = 0; i < all.length; i++) {
-	  			var products = all[i].products;
-	  			for (var j = 0; j < products.length; j++) {
-	  				products[j].isSelected = bool;
-	  			}
-	  		}
-  		} else {
-  			var index = this.shops.indexOf(all);
-  			var bool = !this.isShopSelectedAll[index];
-  			for (var i = 0; i < all.products.length; i++) {
-  				all.products[i].isSelected = bool;
-  			}
-  		}
-  	},
-  	// 店铺全选
-  	shopSelectAll: function (shop) {
-
-  	},
   	// 计算降价金额
-  	calReducedMoney: function (product) {
-  		return (this.getProduct(product.id).price0 - this.getProduct(product.id).price1).toFixed(2);
-  	},
-  	// 根据商品id获取详细信息
-  	getProduct: function (id) {
-  		return this.allProducts[id - 1];
+  	calReducedMoney: function (obj) {
+  		return (obj.originalPrice - obj.price).toFixed(2);
   	},
   	// 计算滚动条移动条下方与屏幕地面的距离；
   	calScrollBottom: function () {
@@ -324,30 +243,10 @@ export default {
   	fixHeaderAgain: function () {
   		this.$emit('fix-header');
   	},
-  	// 获取所有商品列表的信息
-  	getAllProducts: function () {
-  		var _this = this;
-  		this.$http.get('../../static/products.json')
-  			.then(function (response) {
-  				_this.allProducts = eval('(' + JSON.parse(JSON.stringify(response.bodyText)) + ')').data;
-  				// for (var i = 0; i < productsList.length; i++) {
-  				// 	var id = productsList[i].productId;
-  				// 	productsList[i].brand = products[id - 1].brand;
-  				// 	console.log(productsList[i]);
-  					// productsList[i].productInfo = products[id-1];
-  					// _this.$set(_this.productsList[i], 'productInfo', products[id-1]);
-  					// _this.productsList[i].productInfo = Object.assign({}, _this.productsList[i].productInfo, products[id-1] );
-  				// }
-  			});
-  	},
   },
-  created () {},
   mounted () {
   	this.calScrollBottom();
   	this.autoHideSummaryBar();
-  	this.getAllProducts();
-  	console.log(this.isShopSelectedAll);
-  	console.log(this.isSelectedAll);
   }
 };
 </script>
@@ -586,4 +485,3 @@ export default {
 		z-index: 10;
 	}
 </style>
-

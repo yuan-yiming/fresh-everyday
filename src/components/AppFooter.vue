@@ -67,14 +67,12 @@ export default {
 	#footer .good-service-wrapper {
 		width: 100%;
 		height: 100px;
-		/*margin-top: 60px;*/
 		background-color: #eee;
 	}
 	#footer .good-service-wrapper .good-service {
 		width: 1200px;
 		height: 100%;
 		margin: 0 auto;
-		/*background-color: #fff;*/
 	}
 	/* 底部信息部分 */
 	#footer .footer-info-container {

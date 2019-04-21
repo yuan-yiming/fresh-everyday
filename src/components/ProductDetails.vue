@@ -52,7 +52,7 @@
 			</div>
 		</div>
 		<div class="recommendation">
-			<p>大家都在买</p>
+			<p>大家都在看</p>
 			<ul>
 				<li v-for="product in recommendedProduct">
 					<div class="recom-product-img">
@@ -420,6 +420,7 @@ export default {
 			line-height: 30px;
 			text-align: center;
 			font-weight: bold;
+			color: #666;
 		}
 		.product-details .main-area .recommendation>ul {
 			/*height: 300px;*/
