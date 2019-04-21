@@ -91,6 +91,7 @@
 <script>
 import UserCenterTemp from '@/components/UserCenterTemp'
 import SummaryBar from '@/components/SummaryBar'
+import inputProducts from '../../static/products.js' 
 
 export default {
   name: 'ShoppingCart',
@@ -187,7 +188,7 @@ export default {
     		},	
     	],
     	// 所有商品
-    	allProducts: [],
+    	allProducts: inputProducts,
     }
   },
   computed: {
@@ -324,20 +325,12 @@ export default {
   	fixHeaderAgain: function () {
   		this.$emit('fix-header');
   	},
-  	// 获取所有商品列表的信息
+  	// 获取所有商品列表的信息，（改用products.js）
   	getAllProducts: function () {
   		var _this = this;
   		this.$http.get('../../static/products.json')
   			.then(function (response) {
   				_this.allProducts = eval('(' + JSON.parse(JSON.stringify(response.bodyText)) + ')').data;
-  				// for (var i = 0; i < productsList.length; i++) {
-  				// 	var id = productsList[i].productId;
-  				// 	productsList[i].brand = products[id - 1].brand;
-  				// 	console.log(productsList[i]);
-  					// productsList[i].productInfo = products[id-1];
-  					// _this.$set(_this.productsList[i], 'productInfo', products[id-1]);
-  					// _this.productsList[i].productInfo = Object.assign({}, _this.productsList[i].productInfo, products[id-1] );
-  				// }
   			});
   	},
   },
@@ -345,7 +338,7 @@ export default {
   mounted () {
   	this.calScrollBottom();
   	this.autoHideSummaryBar();
-  	this.getAllProducts();
+  	// this.getAllProducts();
   	console.log(this.isShopSelectedAll);
   	console.log(this.isSelectedAll);
   }
