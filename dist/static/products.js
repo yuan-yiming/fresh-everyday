@@ -158,7 +158,7 @@ export default [
         "name": "大闸蟹",
         "desc": "蟹知香长荡湖大闸蟹礼盒 现货(公3.8-3.3两 母2.7-2.3两)8只",
         "price0": 199.00,
-        "price1": 198.90,
+        "price1": 190.90,
         "specification": "2只",
         "producingArea": "湖南",
         "imgName": "12.jpg",
