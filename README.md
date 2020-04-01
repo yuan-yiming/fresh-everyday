@@ -4,6 +4,8 @@
 
 网站浏览地址：https://yuan-yiming.github.io/fresh-everyday/dist/#/
 
+项目地址：https://github.com/Yuan-Yiming/fresh-everyday
+
 ## Build Setup
 
 ``` bash
