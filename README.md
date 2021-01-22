@@ -1,6 +1,6 @@
 # fresh-everyday
 
-> 用vue搭建的一个电商网页前端
+> 用vue搭建的一个电商网页前端（Vue2入门项目）
 
 网站浏览地址：https://yuan-yiming.github.io/fresh-everyday/dist/#/
 
