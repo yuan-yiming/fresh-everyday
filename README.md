@@ -6,7 +6,7 @@
 
 项目地址：https://github.com/Yuan-Yiming/fresh-everyday
 
-ps：目前所有的github.io的网站都好像打不开了，需要在自己电脑上C:/Windows/System32/drivers/etc/HOSTS 文件里最后一行加上：
+ps：目前所有的github.io的网站都好像打不开了，需要在自己电脑上C:/Windows/System32/drivers/etc/HOSTS 文件里最后一行加上：  
 ```185.199.110.153  yuan-yiming.github.io```
 
 ## Build Setup
