@@ -1,6 +1,6 @@
 # fresh-everyday
 
-> 用vue搭建的一个电商网页前端（Vue2入门项目）
+> vue2 + vue-router 搭建的一个入门级别的电商项目（仿京东生鲜）
 
 网站浏览地址：https://yuan-yiming.github.io/fresh-everyday/dist/#/
 
